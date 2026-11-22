@@ -1,5 +1,6 @@
 package com.techpulse.rbac.controller;
 
+import com.techpulse.rbac.constant.AppMessages;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,7 +38,10 @@ class AuthControllerTest {
     @Test
     void loginReturnsToken() throws Exception {
         LoginResponse response =
-                new LoginResponse("signed-token", "Bearer", 3600000L);
+                new LoginResponse(
+                        "signed-token",
+                        AppMessages.BEARER_TOKEN_TYPE,
+                        3600000L);
         when(authService.login(any(LoginRequest.class))).thenReturn(response);
 
         mockMvc.perform(post("/auth/login")
@@ -46,7 +50,8 @@ class AuthControllerTest {
                                 new LoginRequest("alice", "password123"))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").value("signed-token"))
-                .andExpect(jsonPath("$.tokenType").value("Bearer"));
+                .andExpect(jsonPath("$.tokenType")
+                        .value(AppMessages.BEARER_TOKEN_TYPE));
     }
 
     @Test

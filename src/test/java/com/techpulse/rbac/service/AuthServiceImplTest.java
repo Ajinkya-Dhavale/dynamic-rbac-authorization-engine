@@ -1,5 +1,6 @@
 package com.techpulse.rbac.service;
 
+import com.techpulse.rbac.constant.AppMessages;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -39,7 +40,7 @@ class AuthServiceImplTest {
                 new LoginRequest("alice", "password123"));
 
         assertEquals("signed-token", response.getAccessToken());
-        assertEquals("Bearer", response.getTokenType());
+        assertEquals(AppMessages.BEARER_TOKEN_TYPE, response.getTokenType());
         assertEquals(3600000L, response.getExpiresIn());
     }
 

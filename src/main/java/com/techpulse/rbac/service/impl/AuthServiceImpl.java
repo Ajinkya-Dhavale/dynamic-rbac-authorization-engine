@@ -1,5 +1,6 @@
 package com.techpulse.rbac.service.impl;
 
+import com.techpulse.rbac.constant.AppMessages;
 import com.techpulse.rbac.dto.LoginRequest;
 import com.techpulse.rbac.dto.LoginResponse;
 import com.techpulse.rbac.entity.User;
@@ -47,6 +48,9 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(user.getUsername());
         log.info("Login successful");
-        return new LoginResponse(token, "Bearer", jwtService.expirationMs());
+        return new LoginResponse(
+                token,
+                AppMessages.BEARER_TOKEN_TYPE,
+                jwtService.expirationMs());
     }
 }

@@ -52,4 +52,8 @@ public final class AppMessages {
             "User not found";
     public static final String USER_ROLE_ALREADY_EXISTS =
             "Role is already assigned to the user";
+    public static final String SECURE_DATA_ACCESS_GRANTED =
+            "Secure data accessed successfully";
+    public static final String BEARER_TOKEN_TYPE =
+            "Bearer";
 }

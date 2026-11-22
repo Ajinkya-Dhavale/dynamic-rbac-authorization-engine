@@ -52,4 +52,25 @@ public class JwtService {
     public long expirationMs() {
         return expirationMs;
     }
+
+    public String extractUsername(String token) {
+        return Jwts.parser()
+                .verifyWith(signingKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(signingKey)
+                    .build()
+                    .parseSignedClaims(token);
+            return true;
+        } catch (RuntimeException exception) {
+            return false;
+        }
+    }
 }

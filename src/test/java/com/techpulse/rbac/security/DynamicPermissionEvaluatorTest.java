@@ -3,6 +3,7 @@ package com.techpulse.rbac.security;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.techpulse.rbac.repository.RolePermissionRepository;
@@ -63,5 +64,25 @@ class DynamicPermissionEvaluatorTest {
     void deniesNullAuthentication() {
         assertFalse(evaluator.hasPermission(
                 null, null, "MANAGE_ROLES"));
+    }
+
+    @Test
+    void deniedPermissionIsCheckedAgainAfterMappingRemoval() {
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        "alice", null, AuthorityUtils.NO_AUTHORITIES);
+        when(rolePermissionRepository.hasPermission(
+                "alice", "MANAGE_ROLES"))
+                .thenReturn(true)
+                .thenReturn(false);
+
+        assertTrue(evaluator.hasPermission(
+                authentication, null, "MANAGE_ROLES"));
+        assertFalse(evaluator.hasPermission(
+                authentication, null, "MANAGE_ROLES"));
+
+        verify(rolePermissionRepository,
+                org.mockito.Mockito.times(2))
+                .hasPermission("alice", "MANAGE_ROLES");
     }
 }

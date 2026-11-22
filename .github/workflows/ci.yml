@@ -12,7 +12,6 @@ jobs:
 
     env:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      H2_PASSWORD: ${{ secrets.H2_PASSWORD }}
 
     steps:
       - name: Checkout

@@ -48,4 +48,8 @@ public final class AppMessages {
             "Permission not found";
     public static final String ROLE_PERMISSION_ALREADY_EXISTS =
             "Permission is already assigned to the role";
+    public static final String USER_NOT_FOUND =
+            "User not found";
+    public static final String USER_ROLE_ALREADY_EXISTS =
+            "Role is already assigned to the user";
 }

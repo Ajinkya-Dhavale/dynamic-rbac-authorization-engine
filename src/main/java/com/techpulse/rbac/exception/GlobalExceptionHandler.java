@@ -62,6 +62,15 @@ public class GlobalExceptionHandler {
                 request, Map.of());
     }
 
+    @ExceptionHandler(DuplicateUserRoleException.class)
+    public ResponseEntity<ApiError> handleDuplicateUserRole(
+            DuplicateUserRoleException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: user role mapping already exists");
+        return response(HttpStatus.CONFLICT, exception.getMessage(),
+                request, Map.of());
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFound(
             ResourceNotFoundException exception,

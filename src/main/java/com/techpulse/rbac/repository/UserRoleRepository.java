@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
 
+    boolean existsByUserIdAndRoleId(Long userId, Long roleId);
+
     @Query("""
             select ur
             from UserRole ur

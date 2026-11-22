@@ -33,14 +33,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findByUsername(request.username())
+        User user = userRepository.findByUsername(request.getUsername())
                 .filter(User::isActive)
                 .orElseThrow(() -> {
                     log.warn("Login failed: invalid or inactive user");
                     return new InvalidCredentialsException();
                 });
 
-        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             log.warn("Login failed: incorrect password");
             throw new InvalidCredentialsException();
         }

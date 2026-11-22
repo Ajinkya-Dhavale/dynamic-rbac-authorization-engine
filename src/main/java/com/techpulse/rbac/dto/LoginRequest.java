@@ -3,14 +3,22 @@ package com.techpulse.rbac.dto;
 import com.techpulse.rbac.constant.AppMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record LoginRequest(
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginRequest {
+
         @NotBlank(message = AppMessages.USERNAME_REQUIRED)
         @Size(max = 255, message = AppMessages.USERNAME_TOO_LONG)
-        String username,
+        private String username;
 
         @NotBlank(message = AppMessages.PASSWORD_REQUIRED)
         @Size(min = 8, max = 255, message = AppMessages.PASSWORD_LENGTH_INVALID)
-        String password
-) {
+        private String password;
 }

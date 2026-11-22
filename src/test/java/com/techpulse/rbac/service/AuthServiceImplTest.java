@@ -38,9 +38,9 @@ class AuthServiceImplTest {
         LoginResponse response = authService.login(
                 new LoginRequest("alice", "password123"));
 
-        assertEquals("signed-token", response.accessToken());
-        assertEquals("Bearer", response.tokenType());
-        assertEquals(3600000L, response.expiresIn());
+        assertEquals("signed-token", response.getAccessToken());
+        assertEquals("Bearer", response.getTokenType());
+        assertEquals(3600000L, response.getExpiresIn());
     }
 
     @Test

@@ -3,3 +3,7 @@ target/
 
 # IDE settings
 .vscode/
+.data/
+data/
+.env
+.env.*

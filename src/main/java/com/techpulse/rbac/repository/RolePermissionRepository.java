@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 public interface RolePermissionRepository
         extends JpaRepository<RolePermission, Long> {
 
+    boolean existsByRoleIdAndPermissionId(Long roleId, Long permissionId);
+
     @Query("""
             select count(rp) > 0
             from RolePermission rp

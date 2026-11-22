@@ -42,4 +42,10 @@ public final class AppMessages {
             "Permission name must not exceed 100 characters";
     public static final String PERMISSION_ALREADY_EXISTS =
             "Permission already exists";
+    public static final String ROLE_NOT_FOUND =
+            "Role not found";
+    public static final String PERMISSION_NOT_FOUND =
+            "Permission not found";
+    public static final String ROLE_PERMISSION_ALREADY_EXISTS =
+            "Permission is already assigned to the role";
 }

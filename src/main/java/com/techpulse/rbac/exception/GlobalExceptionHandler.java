@@ -53,6 +53,24 @@ public class GlobalExceptionHandler {
                 request, Map.of());
     }
 
+    @ExceptionHandler(DuplicateRolePermissionException.class)
+    public ResponseEntity<ApiError> handleDuplicateRolePermission(
+            DuplicateRolePermissionException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: role permission mapping already exists");
+        return response(HttpStatus.CONFLICT, exception.getMessage(),
+                request, Map.of());
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiError> handleResourceNotFound(
+            ResourceNotFoundException exception,
+            HttpServletRequest request) {
+        log.warn("Not found: {}", exception.getMessage());
+        return response(HttpStatus.NOT_FOUND, exception.getMessage(),
+                request, Map.of());
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrityViolation(
             DataIntegrityViolationException exception,
@@ -98,6 +116,15 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException exception,
             HttpServletRequest request) {
         log.warn("Bad request: invalid parameter");
+        return response(HttpStatus.BAD_REQUEST, AppMessages.INVALID_PARAMETER,
+                request, Map.of());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgument(
+            IllegalArgumentException exception,
+            HttpServletRequest request) {
+        log.warn("Bad request: {}", exception.getMessage());
         return response(HttpStatus.BAD_REQUEST, AppMessages.INVALID_PARAMETER,
                 request, Map.of());
     }

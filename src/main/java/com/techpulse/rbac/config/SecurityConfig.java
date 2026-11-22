@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.http.HttpStatus;
 
 @Configuration
 @EnableMethodSecurity
@@ -43,6 +45,8 @@ public class SecurityConfig {
             )
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(exceptions ->
+                exceptions.authenticationEntryPoint(authenticationEntryPoint()))
             .addFilterBefore(
                     jwtAuthenticationFilter,
                     UsernamePasswordAuthenticationFilter.class);
@@ -53,6 +57,21 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, exception) -> {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            response.getWriter().write(
+                    "{\"timestamp\":\"" + java.time.Instant.now()
+                            + "\",\"status\":401,"
+                            + "\"error\":\"Unauthorized\","
+                            + "\"message\":\"Authentication required\","
+                            + "\"path\":\"" + request.getRequestURI()
+                            + "\",\"fieldErrors\":{}}");
+        };
     }
 
     @Bean

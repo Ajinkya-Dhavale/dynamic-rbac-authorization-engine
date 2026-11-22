@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,24 @@ public class GlobalExceptionHandler {
 
     private static final Logger log =
             LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(DuplicateRoleException.class)
+    public ResponseEntity<ApiError> handleDuplicateRole(
+            DuplicateRoleException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: role already exists");
+        return response(HttpStatus.CONFLICT, exception.getMessage(),
+                request, Map.of());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiError> handleDataIntegrityViolation(
+            DataIntegrityViolationException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: data constraint violated");
+        return response(HttpStatus.CONFLICT,
+                AppMessages.ROLE_ALREADY_EXISTS, request, Map.of());
+    }
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ApiError> handleInvalidCredentials(

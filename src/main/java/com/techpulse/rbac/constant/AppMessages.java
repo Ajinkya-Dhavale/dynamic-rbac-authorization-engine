@@ -28,4 +28,10 @@ public final class AppMessages {
             "Password is required";
     public static final String PASSWORD_LENGTH_INVALID =
             "Password must contain between 8 and 255 characters";
+    public static final String ROLE_NAME_REQUIRED =
+            "Role name is required";
+    public static final String ROLE_NAME_TOO_LONG =
+            "Role name must not exceed 100 characters";
+    public static final String ROLE_ALREADY_EXISTS =
+            "Role already exists";
 }

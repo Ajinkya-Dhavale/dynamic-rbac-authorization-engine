@@ -35,6 +35,24 @@ public class GlobalExceptionHandler {
                 request, Map.of());
     }
 
+    @ExceptionHandler(DuplicateUserException.class)
+    public ResponseEntity<ApiError> handleDuplicateUser(
+            DuplicateUserException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: username already exists");
+        return response(HttpStatus.CONFLICT, exception.getMessage(),
+                request, Map.of());
+    }
+
+    @ExceptionHandler(DuplicatePermissionException.class)
+    public ResponseEntity<ApiError> handleDuplicatePermission(
+            DuplicatePermissionException exception,
+            HttpServletRequest request) {
+        log.warn("Conflict: permission already exists");
+        return response(HttpStatus.CONFLICT, exception.getMessage(),
+                request, Map.of());
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrityViolation(
             DataIntegrityViolationException exception,

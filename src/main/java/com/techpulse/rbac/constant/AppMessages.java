@@ -34,4 +34,12 @@ public final class AppMessages {
             "Role name must not exceed 100 characters";
     public static final String ROLE_ALREADY_EXISTS =
             "Role already exists";
+    public static final String USER_ALREADY_EXISTS =
+            "Username already exists";
+    public static final String PERMISSION_NAME_REQUIRED =
+            "Permission name is required";
+    public static final String PERMISSION_NAME_TOO_LONG =
+            "Permission name must not exceed 100 characters";
+    public static final String PERMISSION_ALREADY_EXISTS =
+            "Permission already exists";
 }
